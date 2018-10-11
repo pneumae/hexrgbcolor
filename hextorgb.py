@@ -1,3 +1,8 @@
+def ZeroPad(hexValue):
+    if len(hexValue) == 1:
+        hexValue = "0"+hexValue
+    return hexValue
+
 def HexRgb(value):
     valueList = list(value)
     #slice array, join values, turn hex to decimal
@@ -7,27 +12,33 @@ def HexRgb(value):
     print(r,g,b)
 
 def RgbHex(value):
-    r = hex(int(value[0]))[2:]
-    g = hex(int(value[1]))[2:]
-    b = hex(int(value[2]))[2:]
+    r = ZeroPad(hex(int(value[0]))[2:])
+    g = ZeroPad(hex(int(value[1]))[2:])
+    b = ZeroPad(hex(int(value[2]))[2:])
     print(r + g + b)
 
-
-rawString = input()
-numberList = rawString.split(" ")
+def Main():
+    print("+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+")
+    rawString = input()
+    numberList = rawString.split(" ")
 #print(numberList)
 
-for i in range(0,len(numberList)-2):
-#    print(i)
-    if(len(numberList[i]) == 6):
-        HexRgb(numberList[i])
-        continue
-    if(len(numberList[i]) <= 3):
-        if(len(numberList[i+1]) <= 3 and len(numberList[i+2]) <= 3):
-            decArray = [numberList[i],numberList[i+1],numberList[i+2]]
-            numberList[i] = decArray[:]
-            a = i+1
-            b = i+3
-            del numberList[i+1:b]
-            RgbHex(numberList[i])
+    i = 0
+    while i < len(numberList):
+        if(len(numberList[i]) == 6):
+            HexRgb(numberList[i])
+            i+=1
+            continue
+        if(len(numberList[i]) <= 3):
+            if(len(numberList[i+1]) <= 3 and len(numberList[i+2]) <= 3):
+                decimalArray = [numberList[i],numberList[i+1],numberList[i+2]]
+                numberList[i] = decimalArray[:]
+                a = i+1
+                b = i+3
+                RgbHex(numberList[i])
+                i+=3
+
+while True:
+    Main()
+
 
